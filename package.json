@@ -1,0 +1,42 @@
+{
+  "name": "webgl-tests",
+  "version": "1.0.0",
+  "description": "this is a test repo focused on development with webgl",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode=development --hot --host 0.0.0.0 --port 8007",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neticon/webgl-tests.git"
+  },
+  "author": "paf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Neticon/webgl-tests/issues"
+  },
+  "homepage": "https://github.com/Neticon/webgl-tests#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "glsl-shader-loader": "^0.1.6",
+    "html-webpack-plugin": "^3.2.0",
+    "imports-loader": "^0.8.0",
+    "style-loader": "^0.19.0",
+    "url-loader": "^0.6.2",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "dependencies": {
+    "dat.gui": "^0.7.2",
+    "three": "^0.96.0"
+  }
+}
