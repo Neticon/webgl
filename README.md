@@ -44,6 +44,8 @@ Files used are .obj and .mtl for Frame, Lenses, and Temple components.
 
 **.mtl** (material template library) files define materials properties (color [ambient, diffuse, specular], opacity, illumination) and associated textures file names. These materials are then recalled from the .obj file for individual geometries.
 
+See [this wikipedia entry](https://en.wikipedia.org/wiki/Wavefront_.obj_file) for a more detailed explanation.
+
 Total size of .obj and .mtl for this model components is <1MB
 
 .obj are exported as low-poly geometries, enriched runtime via vertex subdivision.
