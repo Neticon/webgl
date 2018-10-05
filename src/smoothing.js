@@ -1,9 +1,9 @@
 const jsUtil = require('../lib/js-utils')
 const THREE = require('three')
-require('imports-loader?THREE=three!three-examples/loaders/MTLLoader')
-require('imports-loader?THREE=three!three-examples/loaders/OBJLoader')
-require('imports-loader?THREE=three!three-examples/controls/OrbitControls')
-require('imports-loader?THREE=three!three-examples/modifiers/SubdivisionModifier')
+require('three-examples/loaders/MTLLoader')
+require('three-examples/loaders/OBJLoader')
+require('three-examples/controls/OrbitControls')
+require('three-examples/modifiers/SubdivisionModifier')
 const dat = require('dat.gui')
 let gui = new dat.GUI()
 

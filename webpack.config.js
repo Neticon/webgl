@@ -26,10 +26,10 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          // this does not work 
-          test: /node_modules\/three\/examples\/js/,
+          test: /three\\examples/,
           loader: 'imports-loader?THREE=three'
-        },
+        }
+        ,
         {
           test: /\.js$/,
           loader: 'babel-loader',

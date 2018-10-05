@@ -1,13 +1,12 @@
 const jsUtil = require('../lib/js-utils')
 const THREE = require('three')
-require('imports-loader?THREE=three!three-examples/loaders/MTLLoader')
-require('imports-loader?THREE=three!three-examples/loaders/OBJLoader')
-require('imports-loader?THREE=three!three-examples/controls/OrbitControls')
-require('imports-loader?THREE=three!three-examples/modifiers/SubdivisionModifier')
+require('three-examples/loaders/MTLLoader')
+require('three-examples/loaders/OBJLoader')
+require('three-examples/controls/OrbitControls')
+require('three-examples/modifiers/SubdivisionModifier')
 const dat = require('dat.gui')
 let gui = new dat.GUI()
 
-// window.__p = promisify(new THREE.OBJLoader().load)
 const guiVars = {
   lightType: 'SpotLight',
   lightAnimate: false,
@@ -29,14 +28,10 @@ objLoader.loadP = jsUtil.promifyFn(objLoader.load.bind(objLoader), 1, 'rsv')
 const mtlLoader = new THREE.MTLLoader()
 mtlLoader.crossOrigin = true
 mtlLoader.loadP = jsUtil.promifyFn(mtlLoader.load.bind(mtlLoader), 1, 'rsv')
-
 const radiants = degrees => Math.PI / 180 * degrees
-
 const { innerWidth: WIDTH, innerHeight: HEIGHT } = window
-
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, .1, 1000)
-// const camera = new THREE.OrthographicCamera(-15,15,15,-15,.1,1000)
 const renderer = new THREE.WebGLRenderer({ antialias: true, precision: 'highp' })
 const orbitControls = new THREE.OrbitControls(camera, renderer.domElement)
 
@@ -48,7 +43,6 @@ document.body.appendChild(renderer.domElement)
 
 scene.fog = new THREE.FogExp2(0xffffff, 0)
 
-// var grid = new THREE.GridHelper(300, 10, 0xffffff);
 const plane = getPlane(40, 40)
 plane.rotation.x = radiants(-90)
 plane.receiveShadow = true
@@ -59,24 +53,19 @@ camera.lookAt(new THREE.Vector3())
 
 const ambientLight = getAmbientLight()
 scene.add(ambientLight)
-// const light1 = new THREE.PointLight(0xffffff)
-// light1.position.set(0,12.5,-20)
-// light1.castShadow = false
-// scene.add(light1)
-
 
 let light = {}
 setLight(THREE[guiVars.lightType])
 
 async function getModel() {
   const modelGroup = new THREE.Group()
-  modelGroup.name = 'rb2132'
-  const frame = await getObj('./assets/models/RB2132/', 'Frame')
-  const lenses = await getObj('./assets/models/RB2132/', 'Lenses')
-  const temple = await getObj('./assets/models/RB2132/', 'Temple')
+  modelGroup.name = 'meteor'
+  const frame = await getObj('./assets/models/meteor/', 'Frame')
+  const lenses = await getObj('./assets/models/meteor/', 'Lenses')
+  const temple = await getObj('./assets/models/meteor/', 'Temple')
   modelGroup.add(frame)
   modelGroup.add(lenses)
-  modelGroup.add(temple)
+  modelGroup.add(temple);
   modelGroup.traverse(mesh => {
     if (mesh.type === 'Mesh') {
       mesh.receiveShadow = true
@@ -103,13 +92,6 @@ async function getModel() {
 }
 
 getModel()
-//scene.background = 0xffffff
-
-
-// ;['map', 'bumpMap', 'normalMap'].map(propKey=>{
-//   planeMesh.material[propKey].wrapS = planeMesh.material[propKey].wrapT = THREE.RepeatWrapping
-//   planeMesh.material[propKey].repeat.set(10,10)
-// })
 
 const renderLoop = () => {
   orbitControls.update()
@@ -121,24 +103,12 @@ const renderLoop = () => {
 
 renderLoop()
 
-
 function getSmooth(geometry, subdivisions) {
   // scene.remove(scene.getObjectByName('smooth'))
   const modifier = new THREE.SubdivisionModifier(subdivisions)
   const modified = modifier.modify(geometry)
   // addMesh(modified, material, 10, 'smooth')
   return modified
-}
-/**
- * @param {THREE.Mesh} mesh 
- */
-function updateVertices(mesh) {
-  const tDelta = clock.getElapsedTime()
-  mesh.geometry.vertices.map((vertex, idx) => {
-    vertex.z += (Math.sin(tDelta + idx * 0.5) * .0005)
-  })
-  mesh.geometry.verticesNeedUpdate = true
-
 }
 async function getObj(folder, filename) {
   mtlLoader.setPath(folder)
@@ -150,14 +120,11 @@ async function getObj(folder, filename) {
   const child = obj.children[0]
   const geometry = getSmooth(child.geometry, 3)
   child.geometry = geometry
-  // obj.children[0].geometry.computeVertexNormals()
-  // centerObjectVertically(obj)
   return child
 }
-
 function getPlane(...args) {
   const geometry = new THREE.PlaneGeometry(...args)
-  const material = new THREE.MeshPhongMaterial({ color: 0xbfbfbf, wireframe: false })
+  const material = new THREE.MeshPhongMaterial({color: 0xbfbfbf, wireframe: false })
   // const material = new THREE.ShadowMaterial({opacity:.5})
   material.side = THREE.DoubleSide
   const mesh = new THREE.Mesh(geometry, material)
@@ -184,18 +151,14 @@ function setLight(lightClass) {
   const lightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff })
   const lightMesh = new THREE.Mesh(lightGeometry, lightMaterial)
   light.add(lightMesh)
-  // light.position.set(-3, 2, 5)
   light.position.set(-13, 7.5, 14)
 
-
   if (hasShadow) {
-    // light.shadow.bias = -0.01 // not sure the fuck this does
     light.shadow.mapSize.width = 2048; // great, but FPS drops a lot
     light.shadow.mapSize.height = 2048; // great, but FPS drops a lot
     addCameraHelper(light.shadow.camera, 'lightCH')
   }
   scene.add(light)
-  //light.target.position.set(0,0,-5)
 }
 function setGui(_meshes) {
   gui.remember({})
@@ -245,66 +208,10 @@ function setGui(_meshes) {
     })
   })
 
-
   function updateShadowsAndHelper() {
     light.shadow.camera.updateProjectionMatrix()
     scene.getObjectByName('lightCH').update()
   }
-}
-function object3DGrid(n, gutter, object3D) {
-  const group = new THREE.Group()
-  const [w, h] = getHW(object3D)
-  for (let i = 0; i < n; i++) {
-    const obj = object3D.clone()
-    obj.position.x = i * (gutter + w)
-    group.add(obj)
-    for (let j = 1; j < n; j++) {
-      const obj = object3D.clone()
-      obj.position.x = i * (gutter + w)
-      obj.position.z = j * (gutter + h)
-      group.add(obj)
-    }
-  }
-
-  const dx = -((gutter + w) * (n - 1)) / 2
-  const dz = -((gutter + h) * (n - 1)) / 2
-
-  group.children.map(o => {
-    o.position.x += dx
-    o.position.z += dz
-  })
-
-  return group
-
-}
-function centerObjectVertically(object) {
-  const boundingBox = getObject3dBoundingBox(object)
-  object.position.y = boundingBox.y * -.5
-}
-function getObject3dBoundingBox(object) {
-  return new THREE.Box3().setFromObject(object).getSize()
-}
-function getObject3DWH(object3D) {
-  const objParams = object3D.geometry.parameters
-  let h = null
-  let w = null
-  if (objParams.hasOwnProperty('height')) {
-    h = objParams['height']
-  } else if (objParams.hasOwnProperty('radius')) {
-    h = objParams['radius'] * 2
-  }
-  if (h === null) {
-    throw new Error('object3D has no height')
-  }
-  if (objParams.hasOwnProperty('width')) {
-    w = objParams['width']
-  } else if (objParams.hasOwnProperty('radius')) {
-    w = objParams['radius'] * 2
-  }
-  if (w === null) {
-    throw new Error('object3D has no height')
-  }
-  return [w, h]
 }
 
 window.__scene = scene

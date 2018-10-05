@@ -1,5 +1,5 @@
 const THREE = require('three')
-require('imports-loader?THREE=three!three-examples/controls/OrbitControls')
+require('three-examples/controls/OrbitControls')
 const dat = require('dat.gui')
 let gui = new dat.GUI()
 const guiVars = {

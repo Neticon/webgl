@@ -37,7 +37,7 @@ It is widely used in WebGL projects because it allows to make real time changes 
 
 ## Content
 
-As a very primordial starting point here a RB2132 model is rendered.
+As a very primordial starting point here a RB-Meteor model is rendered.
 Files used are .obj and .mtl for Frame, Lenses, and Temple components.
 
 **.obj** files contain the vertices coordinates in 3d spaces plus various information that describe which vertices compose which face, how the light should reflect off those faces, how a texture px maps to which face coordinates.
@@ -58,7 +58,8 @@ Next step is to enrich the material with textures and detailed properties, and h
 
 Other small tests are included in the repo
 
-http://locahost:8007?entry=cubes
+  http://locahost:8007?entry=picking
+<br/>http://locahost:8007?entry=cubes
 <br/>http://locahost:8007?entry=head
 <br/>http://locahost:8007?entry=particles
 <br/>http://locahost:8007?entry=sea
