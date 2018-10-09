@@ -1,10 +1,20 @@
 const THREE = require('three')
 require('three-examples/controls/OrbitControls')
+const { addDescription } = require('../lib/js-utils')
+
 const { innerWidth: W, innerHeight: H } = window
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 const camera = new THREE.PerspectiveCamera(45, W / H, 1, 1000)
 const scene = new THREE.Scene()
 const controls = new THREE.OrbitControls(camera, renderer.domElement)
+
+addDescription(`__object picking__
+
+used raycaster to intersect objects from left mouse click coordinates.
+desktop + mobile
+-------
+use mouse to rotate scene.
+use left mouse click or touchstart to pick boxes`, '#ffffff')
 
 renderer.setSize(W, H)
 renderer.setClearColor(0xa0a0a0)
