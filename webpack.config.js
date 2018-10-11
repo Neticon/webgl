@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
+require('./build/genRoutes')
 
 module.exports = (env, argv) => {
   const project = argv.project || ''

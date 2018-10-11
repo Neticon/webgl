@@ -1,0 +1,18 @@
+{
+  "routes": [
+    "http://localhost:8007?entry=cubes",
+    "http://localhost:8007?entry=fresnel",
+    "http://localhost:8007?entry=head-glasses",
+    "http://localhost:8007?entry=head",
+    "http://localhost:8007?entry=model",
+    "http://localhost:8007?entry=particles",
+    "http://localhost:8007?entry=picking",
+    "http://localhost:8007?entry=reflection",
+    "http://localhost:8007?entry=refraction",
+    "http://localhost:8007?entry=sea",
+    "http://localhost:8007?entry=shader",
+    "http://localhost:8007?entry=shader2",
+    "http://localhost:8007?entry=smoothing",
+    "http://localhost:8007?entry=wayfarer"
+  ]
+}

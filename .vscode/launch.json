@@ -8,7 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}\\node_modules\\webpack\\bin\\webpack.js"
+      "program": "${workspaceFolder}\\node_modules\\webpack\\bin\\webpack.js",
+      "program": "${workspaceFolder}\\build\\genroutes.js"
     }
   ]
 }
