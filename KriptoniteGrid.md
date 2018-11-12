@@ -11,21 +11,17 @@ Entities are
 - KObject (Kriptonite Object. This would be analog to a component. Contains _PIM props_ and the threejs object3D created according to the PIM props) 
 
 The GridModule is meant to be parsed during rendering to generate the webgl view (and the additional visual clues/ui controls)
-
+<p>
 <img alt="Grid module 2d" src="./uml/k2d.jpg" height="200"/>
-<img alt="Grid module 3d" src="./uml/k3d.jpg" height="200"/>
-<br><img src="./uml/square_red.svg" height="15px" width="15px"/>
-GridModule
-<br><img src="./uml/square_yellow.svg" height="15px" width="15px"/>
-ContainerModule
-<br><img src="./uml/square_orange.svg" height="15px" width="15px"/>
-ContentModule
-<br><img src="./uml/circle_blue.svg" height="15px" width="15px"/>
-ContentModule.children=null
-<br><img src="./uml/circle_green.svg" height="15px" width="15px"/>
-ContentModule.children = [KObject Shelf]
-<br><img src="./uml/circle_purple.svg" height="15px" width="15px"/>
-ContentModule.children = [KObject Shelf, KObject Box]
+<img alt="Grid module 3d" src="./uml/k3d.jpg" height="200"/></p>
+
+- <img src="./uml/square_red.svg" height="15px" width="15px"/>&nbsp;GridModule
+- <img src="./uml/square_yellow.svg" height="15px" width="15px"/>&nbsp;ContainerModule
+- <img src="./uml/square_orange.svg" height="15px" width="15px"/>&nbsp;ContentModule
+- <img src="./uml/circle_blue.svg" height="15px" width="15px"/>&nbsp;ContentModule.children=null
+- <img src="./uml/circle_green.svg" height="15px" width="15px"/>&nbsp;ContentModule.children = [KObject Shelf]
+- <img src="./uml/circle_purple.svg" height="15px" width="15px"/>&nbsp;ContentModule.children = [KObject Shelf, KObject Box]
+
 
 Module classes inherit from BaseModule. 
 Here main property and methods are listed, more to be added.
