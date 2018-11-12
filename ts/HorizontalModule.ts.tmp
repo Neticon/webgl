@@ -1,0 +1,10 @@
+export class HorizontalModule {
+  type = null
+  height = null
+  width = null
+  constructor(type, width, height) {
+    this.type = type
+    this.height = height
+    this.width = width
+  }
+}

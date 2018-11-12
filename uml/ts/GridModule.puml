@@ -1,0 +1,14 @@
+@startuml
+class GridModule{
+  +children : ContainerModule[]
+  +type_mount : any
+  +type_hAlign : any
+  +parent : any
+}
+
+class BaseModule{
+
+}
+
+BaseModule <|-- GridModule
+@enduml

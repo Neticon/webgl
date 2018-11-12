@@ -1,0 +1,53 @@
+@startuml
+interface IBaseModule{
+  +width : number
+  +height : number
+  +depth : number
+  +type : any
+  +state : any
+  +parent : IBaseModule
+  +children : (IBaseModule | KObject)[]
+  +object3D : any
+  +next : IBaseModule | undefined
+  +prev : IBaseModule | undefined
+  +init(): void
+  +clone(): IBaseModule
+  +cloneChildren(): any
+  +getNextChild(child: any): IBaseModule['children'][0] | undefined
+  +getPrevChild(child: any): IBaseModule['children'][0] | undefined
+  +addObject(object: any): IBaseModule
+  +setObject3D(object: any): IBaseModule
+  +canModuleFitObject(object: any): boolean
+  +canChildModuleFitObject(module: IBaseModule, object: any): boolean
+  +update(data: any, recursive: boolean): IBaseModule
+  +updateParent(data: any, recursive: boolean): IBaseModule
+}
+
+class BaseModule{
+  +width : number
+  +height : number
+  +depth : number
+  +type : any
+  +state : any
+  +parent : IBaseModule
+  +object3D : any
+  +children : (BaseModule|KObject)[]
+  +idx : number
+  + <<readonly>> next : any
+  + <<readonly>> prev : any
+  +init()
+  +clone()
+  +cloneChildren()
+  +getNextChild(child: any)
+  +getPrevChild(child: any)
+  +addObject(object: any)
+  +setObject3D(object3D: any)
+  +canModuleFitObject(object: any)
+  +canChildModuleFitObject(module: any, object: any)
+  +update(data: any, recursive: boolean)
+  +updateParent(data: any, recursive: boolean)
+}
+
+BaseModule --> IBaseModule
+IBaseModule <|-- BaseModule
+@enduml

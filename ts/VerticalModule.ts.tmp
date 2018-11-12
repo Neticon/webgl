@@ -1,0 +1,45 @@
+import {konsts} from './konsts'
+import {ContentModule} from './ContentModule'
+
+export class VerticalModule{
+  type = null
+  height = null
+  width = null
+  children: ContentModule[] = []
+  constructor(type, width, height) {
+    this.type = type
+    this.height = height
+    this.width = width
+    this.init()
+  }
+  init() {
+    const nContentModules = Math.floor(this.height / konsts.VMODULE_UPRIGHT_HOLEPLUSSPAN)
+    for (let i = 0; i < nContentModules; i++) {
+      const opts = {
+        type: this.type,
+        parent: this,
+        idx: i
+      }
+      const contentModule = new ContentModule(
+        this.width,
+        konsts.VMODULE_UPRIGHT_HOLEPLUSSPAN,
+        opts
+      )
+      this.children.push(contentModule)
+    }
+  }
+  canContentModuleFitObject(contentModule, kObject) {
+    // check if content module is free
+    // check kObject dimensions
+    // get how many contentModules kObject takes.
+    // get n contentModules after current
+    // check if each is free
+    // return boolean
+  }
+  getNextContentModule(contentModule) {
+    return this.children[contentModule.idx + 1]
+  }
+  getPrevContentModule(contentModule) {
+    return this.children[contentModule.idx - 1]
+  }
+}

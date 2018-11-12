@@ -1,0 +1,18 @@
+@startuml
+class Enum{
+  +GRID_MODULE_K1 : any
+  +GRID_MODULE_K2 : any
+  +GRID_MODULE_KROSSING : any
+  +STATE_IDLE : any
+  +STATE_BUSY : any
+  +STATE_LOCKED : any
+  +MOUNT_FLOOR : any
+  +MOUNT_WALL : any
+  +ALIGN_TOP : any
+  +ALIGN_BOTTOM : any
+  +CONTAINER_MODULE_HORIZONTAL : any
+  +CONTAINER_MODULE_VERTICAL : any
+}
+
+
+@enduml

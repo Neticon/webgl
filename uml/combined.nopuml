@@ -1,0 +1,3 @@
+@startuml
+!include D:\Git\webgl-tests\uml\ts\out.puml
+@enduml

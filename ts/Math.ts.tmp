@@ -1,0 +1,6 @@
+export type _Math = {
+  CMS2UNITS: number
+  UNITS2CMS: number
+  cmsToUnits: (cm: number) => number,
+  unitsToCms: (units: number) => number
+}

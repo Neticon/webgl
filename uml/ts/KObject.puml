@@ -1,0 +1,23 @@
+@startuml
+interface IKObject{
+  +parent : ContentModule
+  +object3D : any
+  +PIM_props : any
+  +init(conf: any): void
+  +clone(): IKObject
+  +update(): void
+}
+
+class KObject{
+  +parent : ContentModule
+  +object3D : any
+  +PIM_props : any
+  +init()
+  +clone()
+  +update()
+}
+
+IKObject --> ContentModule
+KObject --> ContentModule
+IKObject <|-- KObject
+@enduml

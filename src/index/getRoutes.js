@@ -1,4 +1,4 @@
-const {routes} = require('./routes')
+const { routes } = require('./routes')
 
 const $title = document.createElement('h2')
 $title.textContent = 'Available tests in repo'
@@ -10,19 +10,25 @@ $container.style.padding = '2em'
 $container.style.fontFamily = 'consolas'
 $container.style.lineHeight = '2em'
 
-
 document.body.appendChild($container)
 $container.appendChild($title)
 
 routes
-.map(makeLink)
-.map($container.appendChild.bind($container))
+  .map(makeLink)
+  .map(wrapInSpan)
+  .map($container.appendChild.bind($container))
 
-
-function makeLink(route){
+function makeLink(route) {
   const a = document.createElement('a')
   a.href = a.text = route
   a.target = '_blank'
-  a.style.display = 'block'
   return a
+}
+
+function wrapInSpan($a){
+  const $span = document.createElement('span')
+  const $br = document.createElement('br')
+  $span.appendChild($a)
+  $span.appendChild($br)
+  return $span
 }

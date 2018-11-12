@@ -37,6 +37,7 @@ It is widely used in WebGL projects because it allows to make real time changes 
 
 ## Content
 
+http://locahost:8007?entry=model<br/>
 As a very primordial starting point here a RB-Meteor model is rendered.
 Files used are .obj and .mtl for Frame, Lenses, and Temple components.
 
@@ -56,23 +57,9 @@ As of now, the model is rendered without textures. Only color and material prope
 
 Next step is to enrich the material with textures and detailed properties, and have textures loaded dynamically via controls.
 
-Other small tests are included in the repo
+_front texture has been added. This is a 'backed' texture from Octane that yields the tortoise pattern_
 
-  http://locahost:8007?entry=picking
-<br/>http://locahost:8007?entry=cubes
-<br/>http://locahost:8007?entry=head
-<br/>http://locahost:8007?entry=particles
-<br/>http://locahost:8007?entry=sea
-<br/>http://locahost:8007?entry=shader
-<br/>http://locahost:8007?entry=shader2
-
-
-
-
-
-
-
-
+Other small tests are included in the repo. http://localhost:8007 shows generated routes for all tests.
 
 
 

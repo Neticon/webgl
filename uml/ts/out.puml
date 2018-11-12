@@ -1,0 +1,10 @@
+@startuml
+!include D:\Git\webgl-tests\uml\ts\BaseModule.puml
+!include D:\Git\webgl-tests\uml\ts\ContainerModule.puml
+!include D:\Git\webgl-tests\uml\ts\ContentModule.puml
+!include D:\Git\webgl-tests\uml\ts\Enum.puml
+!include D:\Git\webgl-tests\uml\ts\GridModule.puml
+!include D:\Git\webgl-tests\uml\ts\KObject.puml
+!include D:\Git\webgl-tests\uml\ts\Kripto.puml
+!include D:\Git\webgl-tests\uml\ts\out.puml
+@enduml

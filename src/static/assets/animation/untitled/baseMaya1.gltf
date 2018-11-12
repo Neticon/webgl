@@ -1,0 +1,290 @@
+{
+    "asset": {
+        "copyright": "(C)2018 lorenzo",
+        "generator": "Maya2glTF V0.9.9 df3632e",
+        "version": "2.0"
+    },
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "scene": 0,
+    "nodes": [
+        {
+            "mesh": 0,
+            "translation": [
+                -11.276978492736817,
+                1.0251798629760745,
+                -1.1870503425598145
+            ],
+            "name": "targetMesh"
+        }
+    ],
+    "meshes": [
+        {
+            "primitives": [
+                {
+                    "attributes": {
+                        "NORMAL": 1,
+                        "POSITION": 2,
+                        "TANGENT": 3,
+                        "TEXCOORD_0": 4
+                    },
+                    "indices": 0,
+                    "mode": 4,
+                    "material": 0,
+                    "targets": [
+                        {
+                            "NORMAL": 5,
+                            "POSITION": 6,
+                            "TANGENT": 7
+                        }
+                    ]
+                }
+            ],
+            "weights": [
+                0.0
+            ],
+            "name": "targetMeshShape"
+        }
+    ],
+    "animations": [
+        {
+            "channels": [
+                {
+                    "sampler": 0,
+                    "target": {
+                        "node": 0,
+                        "path": "weights"
+                    }
+                }
+            ],
+            "samplers": [
+                {
+                    "input": 8,
+                    "interpolation": "LINEAR",
+                    "output": 9
+                }
+            ],
+            "name": "clip"
+        }
+    ],
+    "accessors": [
+        {
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 2280,
+            "max": [
+                438
+            ],
+            "min": [
+                0
+            ],
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 5268,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                1.0,
+                1.0,
+                1.0000001192092896
+            ],
+            "min": [
+                -1.000000238418579,
+                -1.0,
+                -1.0000004768371585
+            ],
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                1.0,
+                0.07869059592485428,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -0.07869064807891846,
+                -1.0,
+                1.0
+            ],
+            "type": "VEC4"
+        },
+        {
+            "bufferView": 3,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                1.0000001192092896,
+                1.0
+            ],
+            "min": [
+                0.0,
+                0.0
+            ],
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 10536,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                0.2766959071159363,
+                0.5986862182617188,
+                0.617961585521698
+            ],
+            "min": [
+                -0.2766957879066468,
+                -0.598686158657074,
+                -0.25778964161872866
+            ],
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 15804,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                0.49666303396224978,
+                0.0,
+                0.0
+            ],
+            "min": [
+                -0.49666303396224978,
+                0.0,
+                0.0
+            ],
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 1,
+            "byteOffset": 21072,
+            "componentType": 5126,
+            "count": 439,
+            "max": [
+                0.617961585521698,
+                0.1085672676563263,
+                0.2595531940460205
+            ],
+            "min": [
+                -0.2579590082168579,
+                -0.12335728853940964,
+                -0.25955331325531008
+            ],
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 4,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 199,
+            "max": [
+                8.25
+            ],
+            "min": [
+                0.0
+            ],
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 4,
+            "byteOffset": 796,
+            "componentType": 5126,
+            "count": 199,
+            "max": [
+                1.0
+            ],
+            "min": [
+                0.0
+            ],
+            "type": "SCALAR"
+        }
+    ],
+    "materials": [
+        {
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.4000000059604645,
+                    0.4000000059604645,
+                    0.4000000059604645,
+                    1.0
+                ],
+                "metallicFactor": 0.0,
+                "roughnessFactor": 1.0
+            },
+            "name": "lambert1"
+        }
+    ],
+    "bufferViews": [
+        {
+            "buffer": 0,
+            "byteOffset": 38468,
+            "byteLength": 4560,
+            "target": 34963
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 7024,
+            "byteLength": 26340,
+            "byteStride": 12,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 7024,
+            "byteStride": 16,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 33364,
+            "byteLength": 3512,
+            "byteStride": 8,
+            "target": 34962
+        },
+        {
+            "buffer": 0,
+            "byteOffset": 36876,
+            "byteLength": 1592
+        }
+    ],
+    "buffers": [
+        {
+            "byteLength": 43028,
+            "uri": "baseMaya10.bin"
+        }
+    ]
+}

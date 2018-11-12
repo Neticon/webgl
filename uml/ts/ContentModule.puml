@@ -1,0 +1,13 @@
+@startuml
+class ContentModule{
+  +parent : ContainerModule
+  +children : KObject[]
+}
+
+class BaseModule{
+
+}
+
+ContentModule --> ContainerModule
+BaseModule <|-- ContentModule
+@enduml
