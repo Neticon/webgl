@@ -5,6 +5,7 @@ export class Enum {
   static STATE_IDLE = 3
   static STATE_BUSY = 4
   static STATE_LOCKED = 5
+  static STATE_EDITING = 6
   static MOUNT_FLOOR = 7
   static MOUNT_WALL = 8
   static ALIGN_TOP = 9

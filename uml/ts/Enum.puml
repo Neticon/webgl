@@ -6,6 +6,7 @@ class Enum{
   +STATE_IDLE : any
   +STATE_BUSY : any
   +STATE_LOCKED : any
+  +STATE_EDITING : any
   +MOUNT_FLOOR : any
   +MOUNT_WALL : any
   +ALIGN_TOP : any

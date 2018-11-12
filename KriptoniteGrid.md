@@ -14,12 +14,18 @@ The GridModule is meant to be parsed during rendering to generate the webgl view
 
 <img alt="Grid module 2d" src="./uml/k2d.jpg" height="200"/>
 <img alt="Grid module 3d" src="./uml/k3d.jpg" height="200"/>
-<br><div style="background:red;height:15px;width:15px;display:inline-block"></div> GridModule
-<br><div style="background:yellow;height:15px;width:15px;display:inline-block"></div> ContainerModule
-<br><div style="background:orange;height:15px;width:15px;display:inline-block"></div> ContentModule
-<br><div style="background:blue;height:15px;width:15px;display:inline-block;border-radius:100%"></div> ContentModule.children=null
-<br><div style="background:green;height:15px;width:15px;display:inline-block;border-radius:100%"></div> ContentModule.children = [KObject Shelf]
-<br><div style="background:purple;height:15px;width:15px;display:inline-block;border-radius:100%"></div> ContentModule.children = [KObject Shelf, KObject Box]
+<br><img src="./uml/square_red.svg" height="15px" width="15px"/>
+GridModule
+<br><img src="./uml/square_yellow.svg" height="15px" width="15px"/>
+ContainerModule
+<br><img src="./uml/square_orange.svg" height="15px" width="15px"/>
+ContentModule
+<br><img src="./uml/circle_blue.svg" height="15px" width="15px"/>
+ContentModule.children=null
+<br><img src="./uml/circle_green.svg" height="15px" width="15px"/>
+ContentModule.children = [KObject Shelf]
+<br><img src="./uml/circle_purple.svg" height="15px" width="15px"/>
+ContentModule.children = [KObject Shelf, KObject Box]
 
 Module classes inherit from BaseModule. 
 Here main property and methods are listed, more to be added.
