@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Neticon/webgl-tests#readme",
   "devDependencies": {
+    "@types/three": "^0.93.9",
     "@types/tween.js": "^16.9.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

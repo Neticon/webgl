@@ -21,7 +21,8 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        'three-examples': path.join(__dirname, './node_modules/three/examples/js')
+        'three': 'three/build/three',
+        'three-examples': path.join(__dirname, './node_modules/three/examples/js'),
       }
     },
     module: {

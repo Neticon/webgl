@@ -1,5 +1,5 @@
 const THREE = require('three')
-require('three/examples/js/controls/OrbitControls')
+require('three-examples/controls/OrbitControls')
 const { innerWidth: w, innerHeight: h } = window
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 const scene = new THREE.Scene()

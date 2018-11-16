@@ -1,6 +1,7 @@
 const THREE = require('three')
 require('three-examples/controls/OrbitControls')
 const { addDescription } = require('../lib/js-utils')
+const { getManyRandom } = require('../lib/three-utils')
 
 const { innerWidth: W, innerHeight: H } = window
 const renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -87,31 +88,6 @@ function shootray(v2) {
   raycaster.setFromCamera(v2, camera)
   const intersects = raycaster.intersectObjects(scene.getObjectByName('group').children)
   return intersects[0]
-}
-
-function rand(min, max) {
-  return min + Math.random() * (max - min)
-}
-/**
- * 
- * @param {THREE.Mesh} mesh 
- * @param {number} n 
- */
-function getManyRandom(mesh, n) {
-  const c = () => Math.random()
-  const s = () => rand(0.5, 1.5)
-  const p = () => rand(-5, 5)
-  const group = new THREE.Group()
-  for (let i = 0; i < n; i++) {
-    const m = mesh.material.clone()
-    const g = mesh.geometry.clone()
-    m.color.set(new THREE.Color(c(), c(), c()))
-    g.scale(s(), s(), s())
-    const _mesh = new THREE.Mesh(g, m)
-    _mesh.position.set(p(), p(), p())
-    group.add(_mesh)
-  }
-  return group
 }
 
 window.__scene = scene

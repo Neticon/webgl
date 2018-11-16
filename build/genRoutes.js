@@ -1,8 +1,23 @@
 const fs = require('fs')
 const path = require('path')
 const promisify = require('util').promisify
+const ifaces = require('os').networkInterfaces();
 
-const url = 'http://localhost:8007?entry='
+//console.log(JSON.stringify(ifaces,null,2));
+const hostIface = Object.values(ifaces)
+  .reduce((acc, type) => {
+    type.map(iface => {
+      if (
+        iface.family.toLowerCase() === 'ipv4' &&
+        !iface.internal
+      ) {
+        acc.address = iface.address
+      }
+    })
+    return acc
+  }, { address: 'localhost' })
+
+const url = `http://${hostIface.address}:8007?entry=`
 
 promisify(fs.readdir)(
   path.join(__dirname, '../src')

@@ -4,7 +4,7 @@ const THREE = require('three')
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 const camera = new THREE.PerspectiveCamera(45, W / H, 1, 100)
-require('three/examples/js/controls/OrbitControls')
+require('three-examples/controls/OrbitControls')
 const controls = new THREE.OrbitControls(camera, renderer.domElement)
 
 const mazeFactory = require("@mitchallen/maze-generator");
