@@ -1,5 +1,4 @@
-try{
-  const THREE = require('three')
+const THREE = require('three')
 require('three-examples/controls/OrbitControls')
 // require('three-examples/controls/DragControls')
 require('imports-loader?THREE=three!../lib/DragDropControls')
@@ -310,8 +309,3 @@ function onWindowResize() {
 window.__scene = scene
 window.__renderer = renderer
 window.THREE = THREE
-
-window.__dragDropControls = dragDrpControls
-} catch(e){
-  alert(e)
-}

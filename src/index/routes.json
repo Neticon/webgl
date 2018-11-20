@@ -2,7 +2,9 @@
   "routes": [
     "http://10.10.236.131:8007?entry=animation",
     "http://10.10.236.131:8007?entry=cubes",
+    "http://10.10.236.131:8007?entry=dragging-better",
     "http://10.10.236.131:8007?entry=dragging",
+    "http://10.10.236.131:8007?entry=engraving",
     "http://10.10.236.131:8007?entry=fresnel",
     "http://10.10.236.131:8007?entry=grid",
     "http://10.10.236.131:8007?entry=head-glasses",
