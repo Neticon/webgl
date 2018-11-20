@@ -1,7 +1,9 @@
-const THREE = require('three')
+try{
+  const THREE = require('three')
 require('three-examples/controls/OrbitControls')
-require('three-examples/controls/DragControls')
-// require('imports-loader?THREE=three!../lib/DragControls')
+// require('three-examples/controls/DragControls')
+require('imports-loader?THREE=three!../lib/DragDropControls')
+// require('../lib/DragControls')
 const { addDescription } = require('../lib/js-utils')
 const { getManyRandom } = require('../lib/three-utils')
 const dat = require('dat.gui')
@@ -15,10 +17,8 @@ let renderer
 let camera
 /** @type {THREE.OrbitControls} */
 let controls
-/** @type {THREE.DragControls} */
-let dragControls
-/** @type {THREE.DragControls} */
-let dropControls
+/** @type {THREE.DragDropControls} */
+let dragDropControls
 /** @type {THREE.Group} */
 const draggables = new THREE.Group()
 /** @type {THREE.Group} */
@@ -28,7 +28,10 @@ const dropRegions = []
 
 const guiParams = {
   cubes: 10,
-  fixCameraOnDrag: false
+  setCursor: true,
+  fixDragPlane: true,
+  addPlaneHelper: true,
+  addArrowHelper: true
 }
 
 
@@ -54,22 +57,22 @@ function init() {
 }
 
 function initDesc() {
-  addDescription(`This an object drag drop test using THREE.DragControls &nbsp;&nbsp;&nbsp;&nbsp;
+  addDescription(`This is a better version of the {fn{link(/?entry=dragging,dragging test)}} {{nbsp}}
+  Rewrote THREE.DragControls into THREE.DragDropControls.
+
   Drop regions states are {fn{square(#ffffff)}} idle, {fn{square(#0000ff)}} full, {fn{square(#00ff00)}} available, {fn{square(#ff0000)}} unavailable.
-  Used 2 instances of DragControls. One for dragging cubes, the other for detecting hover on drop regions.
-  The latest get activated/deactivated on dragstart/dragend events of former.
 
-  Problems:
-  Using a second DragControls just for detecting hover is overkill, especially considering all the 
-  eventListeners it attaches on DOM and the drag action to be prevented for drop regions.
-  DragControls do transforms interpolating the projected ray on a plane, which is parallel to the camera.
-  Hence the objects move weirdly if the scene is viewed at an angle.
-  Resetting the camera on initial drag (fixCameraOnDrag option) doesn't work.
-  Plane is still cached on mousedown and used on mousemove, resetting the camera doesn't reset the cached 
-  value.
-
-  It'd be good to rewrite the DragControls to allow for dragging object on a plane independent on camera,
-  and incorporate the drop behaviour on a set of drop regions passed as arguments.
+  Problems addressed:
+  No need to instanciate 2 DragControls since 1 instance of DragDropControls does all.
+  'dropObjects' parameter is an array of dropRegions
+  Drag plane can now be forced to be parallel to the scene origin plane. Which makes moving objects
+  way more intuitive. (fixDragPlane option)
+  
+  Additional convenience:
+  Setting cursor states is now optional
+  Added optional
+  - drag plane helper (plane over which objects move)
+  - and arrow helper (ray casted from center of dragged objects which may or may not interpolate a drop region)
   `, 0xffffff, 0x303030ab)
 }
 function initScene() {
@@ -97,43 +100,42 @@ function initCamera(light) {
   
 }
 function initControls() {
-  let selected = null
-  let dropRegionHovered = null
   controls = new THREE.OrbitControls(camera, renderer.domElement)
-  dragControls = new THREE.DragControls(draggables.children, camera, renderer.domElement)
-  dropControls = new THREE.DragControls(droppables.children, camera, renderer.domElement)
-  dropControls.deactivate()
+  dragDropControls = new THREE.DragDropControls(draggables.children, camera, renderer.domElement, droppables.children, 
+    {
+      scene: scene, 
+      setCursor: true,
+      addPlaneHelper: true, 
+      addArrowHelper: true, 
+    })
 
-  dragControls.addEventListener('dragstart', e => {
-    if(guiParams.fixCameraOnDrag){
-      controls.reset()
-      camera.position.set(0, 0, 15)
-    }
+  dragDropControls.addEventListener('dragstart', e => {
     controls.enabled = false
-    dropControls.activate()
-    selected = e.object
+    e.object.material.transparent = true
+    e.object.material.opacity = .5
   })
-  dragControls.addEventListener('dragend', e => {
-    controls.enabled = true
-    dropControls.deactivate()
-    const dropRegion = dropRegions.find(d=>d.object3Dhover)
-    if (dropRegion) {
-      dropRegion.onTryDrop(selected)
+  dragDropControls.addEventListener('hoveronDrop',e =>{
+    const { object, objectDrop} = e
+    const dropRegion = dropRegions.find(d=>d.plane === e.objectDrop)
+    dropRegion.onHoverWhileDrag(object)
+  })
+  dragDropControls.addEventListener('hoveroffDrop',e =>{
+    const { object, objectDrop} = e
+    const dropRegion = dropRegions.find(d=>d.plane === e.objectDrop)
+    dropRegion.onHoverOffWhileDrag(object)
+  })
+  dragDropControls.addEventListener('dragend', e => {
+    const { object, objectDrop} = e
+    e.object.material.transparent = false
+    if(objectDrop){
+      const dropRegion = dropRegions.find(d=>d.plane === e.objectDrop)
+      dropRegion.onTryDrop(object)
     }
-    selected = null
-
-  })
-  dropControls.addEventListener('hoveron', e => {
-    const dropRegion = e.object.userData.dropRegion
-    dropRegion.onHoverWhileDrag(selected)
-  })
-  dropControls.addEventListener('hoveroff', e => {
-    // if(!dropRegionHovered) return
-    const dropRegion = e.object.userData.dropRegion
-    dropRegion.onHoverOffWhileDrag(selected)
+    controls.enabled = true
   })
 }
 function initMesh(n) {
+  dropRegions.map(d=>d.clear())
   scene.remove(draggables)
   const group = getManyRandom(getMesh(), n, [[-4, 0], [0, 4], [1, 5]])
   group.children.map(object => {
@@ -213,15 +215,20 @@ function getDropRegion(w, h) {
     init() {
       this.plane.userData.dropRegion = this
     },
+    clear(){
+      if(this.object3D.length){
+        this.object3D.splice(0)
+      }
+    },
     onHoverWhileDrag(object) {
       this.object3Dhover = object
       if (this.object3Dhover === this.object3D[0]) {
-        this.object3D.pop()
+        this.clear()
       }
     },
     onHoverOffWhileDrag(object) {
       if (object === this.object3D[0]) {
-        this.object3D.pop()
+        this.clear()
       }
       this.object3Dhover = null
     },
@@ -272,8 +279,11 @@ function getDropRegion(w, h) {
 function initGui() {
   
   gui.open()
-  gui.add(guiParams, 'cubes', 1, 20, 1).onChange(n => { initMesh(n) })
-  gui.add(guiParams, 'fixCameraOnDrag')
+  gui.add(guiParams, 'cubes', 1, 100, 1).onChange(n => { initMesh(n) })
+  gui.add(guiParams, 'setCursor').onChange(v=>{dragDropControls.setOptions({setCursor:v})})
+  gui.add(guiParams, 'fixDragPlane').onChange(v=>{dragDropControls.setOptions({fixDragPlane:v})})
+  gui.add(guiParams, 'addPlaneHelper').onChange(v=>{dragDropControls.setOptions({addPlaneHelper:v})})
+  gui.add(guiParams, 'addArrowHelper').onChange(v=>{dragDropControls.setOptions({addArrowHelper:v})})
 }
 function initHelpers() {
   const gridHelper = new THREE.GridHelper(10, 20)
@@ -301,4 +311,7 @@ window.__scene = scene
 window.__renderer = renderer
 window.THREE = THREE
 
-window.__dragControls = dragControls
+window.__dragDropControls = dragDrpControls
+} catch(e){
+  alert(e)
+}
