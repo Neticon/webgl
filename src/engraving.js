@@ -98,8 +98,8 @@ function initMesh() {
   engravingMap.mapFilter = THREE.LinearMipMapLinearFilter
   material = new THREE.MeshPhongMaterial({
     map: engravingMap,
-    bumpMap: engravingMap,
-    bumpScale:.005,
+    // bumpMap: engravingMap,
+    // bumpScale:.005,
     color: 0x303030
   })
   const mesh = new THREE.Mesh(geo, material)

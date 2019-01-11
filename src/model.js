@@ -68,8 +68,8 @@ async function getModel() {
   modelGroup.add(temple);
   modelGroup.traverse(mesh => {
     if (mesh.type === 'Mesh') {
-      mesh.receiveShadow = true
-      mesh.castShadow = true
+      mesh.receiveShadow = false
+      mesh.castShadow = false
       mesh.material.flatShading = false
     }
   })

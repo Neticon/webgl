@@ -1,5 +1,6 @@
 {
   "routes": [
+    "http://10.10.236.131:8007?entry=2d",
     "http://10.10.236.131:8007?entry=animation",
     "http://10.10.236.131:8007?entry=cubes",
     "http://10.10.236.131:8007?entry=dragging-better",
