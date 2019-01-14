@@ -18,31 +18,31 @@ let camera
 let controls
 /** @type {THREE.Group} */
 const group = new THREE.Group()
-/** @type {{code:string,variant:string, sprite:HTMLImageElement, spritecoords: Object}} */
-const parts = [
-  { code: 'fra', variant: 'red', sprite: '', spritecoords: '' },
-  { code: 'def', variant: 'default', sprite: '', spritecoords: '' },
-  { code: 'led', variant: 'xenon', sprite: '', spritecoords: '' },
-  { code: 'whe', variant: 'alloy_gold', sprite: '', spritecoords: '' },
-
-]
 /** @type {THREE.Group} */
 const sprites = new THREE.Group()
 
-
-
-let sizeSuffix = 's2'
-let spritecoords
 let rotation = 0
+let sizeSuffix = 's2'
+let fra = 'silver'
 let canvasSize = {
   w: window.innerWidth,
   h: window.innerHeight
 }
 
 const guiParams = {
-  rotation: 0,
+  rotation,
+  sizeSuffix,
+  fra
 }
 
+const parts = [
+  { code: 'sha', variant: 'shadows', sprite: '', spritecoords: '', sizeSuffix: sizeSuffix },
+  { code: 'fra', variant: 'silver', sprite: '', spritecoords: '', sizeSuffix: sizeSuffix },
+  { code: 'def', variant: 'default', sprite: '', spritecoords: '', sizeSuffix: sizeSuffix },
+  { code: 'led', variant: 'xenon', sprite: '', spritecoords: '', sizeSuffix: sizeSuffix },
+  { code: 'whe', variant: 'alloy_gold', sprite: '', spritecoords: '', sizeSuffix: sizeSuffix },
+
+]
 init()
 
 function init() {
@@ -64,7 +64,15 @@ function init() {
 }
 
 function initDesc() {
-  addDescription(`This is a test to render 2d assets with webgl {{nbsp}}
+  addDescription(`This is a test to render 2d assets with webgl {{nbsp}}.
+  Each layer is a {fn{link(https://threejs.org/docs/#api/en/objects/Sprite, THREE.Sprite)}} object (plane with diffuse map).
+
+  Sprite object size is the size of the crop from the sprite image.
+  Sprite object position are taken from the spritecoords.json and adapted to make them 
+  work with webgl coords system (offset from 0,0 rather than top-left corner).
+
+  Assets in webgl needs to be pow2, THREE.js resizes each assets at runtime.
+  Calculations need to work with the final resized assets dimensions. 
   `, 0xffffff, 0x303030ab)
 }
 function initScene() {
@@ -73,7 +81,7 @@ function initScene() {
 }
 function initRenderer() {
   renderer = new THREE.WebGLRenderer({ antialias: true, precision: 'highp' })
-  renderer.setClearColor(0xababab)
+  renderer.setClearColor(0xe9ebed)
   renderer.setPixelRatio(window.devicePixelRatio)
   renderer.setSize(window.innerWidth, window.innerHeight)
   document.body.appendChild(renderer.domElement)
@@ -113,6 +121,8 @@ function initGui() {
 
   gui.open()
   gui.add(guiParams, 'rotation', 0, 23, 1).onChange(val => { rotation = val })
+  gui.add(guiParams, 'sizeSuffix', ['s0', 's1', 's2', 's3']).onChange(val => { sizeSuffix = val })
+  gui.add(guiParams, 'fra', ['black', 'blue', 'chalk', 'orange', 'red', 'silver', 'white', 'yellow']).onChange(val => { fra = val })
 
 }
 function initHelpers() {
@@ -121,6 +131,8 @@ function initHelpers() {
   // scene.add(gridHelper)
 }
 function update() {
+  updateSuffix()
+  updateVariant()
   updateRotation()
 }
 function fixCanvasSize() {
@@ -167,28 +179,49 @@ function updateRotation() {
     map.repeat.set(repeatx, repeaty)
     map.offset.set(offsetx, offsety)
 
-    const unit = .015
+    const unit = .012
     sprite.scale.set(
       fragSprite.w * (canvasSize.w / imageSize.w) * unit,
       fragSprite.h * (canvasSize.h / imageSize.h) * unit,
     )
     sprite.position.set(
-    (fragImage.x + (fragImage.w / 2) - (imageSize.w / 2)) * (canvasSize.w / imageSize.w) * unit,
-    -(fragImage.y + (fragImage.h / 2) - (imageSize.h / 2)) * (canvasSize.h / imageSize.h) * unit,
-    0
-    // //   (fragImage.x / imageSize.w) * 2 - 1,
-    // //   (fragImage.y / imageSize.h) * 2 + 1
+      (fragImage.x + (fragImage.w / 2) - (imageSize.w / 2)) * (canvasSize.w / imageSize.w) * unit,
+      -(fragImage.y + (fragImage.h / 2) - (imageSize.h / 2)) * (canvasSize.h / imageSize.h) * unit,
+      0
+      // //   (fragImage.x / imageSize.w) * 2 - 1,
+      // //   (fragImage.y / imageSize.h) * 2 + 1
     )
+  }
+}
+function updateSuffix() {
+  for (const part of parts) {
+    if (sizeSuffix !== part.sizeSuffix) {
+      part.sizeSuffix = sizeSuffix
+      getCoords(part)
+      part.sprite.material.map = textureLoader(getAsset(part))
+      part.sprite.material.needsUpdate = true
+    }
+  }
+}
+function updateVariant() {
+  const _fra = parts.find(x=>x.code === 'fra')
+  if (_fra.variant !== fra) {
+    _fra.variant = fra
+    getCoords(_fra)
+    _fra.sprite.material.map = textureLoader(getAsset(_fra))
+    _fra.sprite.material.needsUpdate = true
   }
 }
 function render() {
   renderer.render(scene, camera)
 }
 function getAsset(part) {
-  return `http://10.10.236.131:8070/porsche/c/${part.code}/${part.variant}/sprite_${sizeSuffix}.webp`
+  const suffix = part.code === 'sha' ? 's0' : part.sizeSuffix
+  return `http://assets.neticon.it/uniqonrepository/pc/porsche/c/${part.code}/${part.variant}/sprite_${suffix}.png`
 }
 function getCoords(part) {
-  fetch(`http://10.10.236.131:8070/porsche/c/${part.code}/${part.variant}/spritecoords_${sizeSuffix}.json`)
+  const suffix = part.code === 'sha' ? 's0' : part.sizeSuffix
+  fetch(`http://assets.neticon.it/uniqonrepository/pc/porsche/c/${part.code}/${part.variant}/spritecoords_${suffix}.json`)
     .then(res => res.json())
     .then(res => { part.spritecoords = res })
     .then(onWindowResize)
